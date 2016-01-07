@@ -1,12 +1,12 @@
 package com.sola.android.acciente.main.internal.di.components;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.sola.android.acciente.main.internal.di.modules.ApplicationModule;
 import com.sola.android.acciente.main.ui.BaseActivity;
 import com.sola.android.architecture.domain.executor.PostExecutionThread;
 import com.sola.android.architecture.domain.executor.ThreadExecutor;
+import com.sola.android.architecture.domain.repository.UserRepository;
 
 import javax.inject.Singleton;
 
@@ -52,5 +52,14 @@ public interface ApplicationComponent {
      * @return 返回UI主线程的实例
      */
     PostExecutionThread getPostExecutionThread();
+
+    /**
+     * 这里是个很有趣，也非常值得研究的地方。
+     * 如果你把这段话注释掉，然后编译，观察以下DaggerApplicationComponent类
+     * 然后在把注释放开，再编译，如果你能了解到这两者之间的区别和原因，@Inject这部分基本就能明确了
+     *
+     * @return 返回仓储
+     */
+    UserRepository userRepository();
 
 }

@@ -6,8 +6,10 @@ import android.content.Context;
 import com.sola.android.acciente.main.executor.JobExecutor;
 import com.sola.android.acciente.main.executor.UIThread;
 import com.sola.android.acciente.main.navigator.Navigator;
+import com.sola.android.architecture.data.repository.UserDataRepository;
 import com.sola.android.architecture.domain.executor.PostExecutionThread;
 import com.sola.android.architecture.domain.executor.ThreadExecutor;
+import com.sola.android.architecture.domain.repository.UserRepository;
 
 import javax.inject.Singleton;
 
@@ -91,6 +93,19 @@ public class ApplicationModule {
     @Singleton
     Navigator provideNavigator() {
         return new Navigator();
+    }
+
+    /**
+     * 这是段非常精髓的代码，就这样一句话，就将domain和data层联系了起来，让原本只和domain有联系的presentation层
+     * 间接指向了data层，并且进行数据交互。
+     *
+     * @param userDataRepository data层仓储
+     * @return 返回domain的仓储
+     */
+    @Provides
+    @Singleton
+    UserRepository provideUserRepository(UserDataRepository userDataRepository) {
+        return userDataRepository;
     }
 
     // ===========================================================
