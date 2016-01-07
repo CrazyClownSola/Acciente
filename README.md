@@ -3,7 +3,9 @@
 > 目标是模仿出整个App中所展现的界面效果
 > 主要的技术点有以下几个：**Material Design**，**Dagger2**，**RxJava**等，主要目的是熟练运用**Material Design**，和对那套作死的框架的熟练……
 
+
 -----------------
+
 
 ## 由Dagger2引起的血案
 > 与其说是血案，不如说是自己作的一手好死，想要从技术层面实现一套松耦合的框架，并且熟练运用。
@@ -170,6 +172,7 @@ public class ApplicationModule { // module的方法命名方式多数采用provi
 Gradle build script dependency：
 `compile 'com.android.support:design:22.2.0' //可修改版本号为自己匹配`
 Design Support Library包含8个控件，具体如下：
+
 | Widget Name	| Description |
 | :-- | :-- |
 |android.support.design.widget.TextInputLayout	|强大带提示的MD风格的EditText|
