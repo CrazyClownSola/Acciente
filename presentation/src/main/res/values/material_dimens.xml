@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="translationZ_app_bar">4dp</dimen>
+    <dimen name="translationZ_float_button_normal">2dp</dimen>
+    <dimen name="translationZ_float_button_pressed">8dp</dimen>
+
+</resources>

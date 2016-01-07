@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.sola.android.acciente.main"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:name=".MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.MainActivity_"
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.BlankActivity"
+            android:label="@string/title_activity_blank">
+        </activity>
+        <activity
+            android:name=".ui.CalendarItemActivity_"
+            android:theme="@style/MaterialTheme"
+            />
+    </application>
+
+</manifest>

@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
+    defaultConfig {
+        applicationId "com.sola.android.acciente.main"
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+    }
+}
+
+retrolambda {
+    jdk System.getenv("JAVA_HOME")
+    javaVersion JavaVersion.VERSION_1_7
+    defaultMethods false
+    incremental true
+}
+
+dependencies {
+    compile project(':domain')
+    compile project(':data')
+
+    testCompile 'junit:junit:4.12'
+
+    //    compile fileTree(dir: 'libs', include: ['*.jar'])
+    def dependencies = rootProject.ext.appDependencies
+    // AA 框架的引用
+    apt dependencies.androidannotations
+    compile dependencies.androidannotations_api
+
+    // Dagger2框架的引用
+    apt dependencies.daggerCompiler
+    compile dependencies.dagger
+    provided dependencies.javaxAnnotation
+
+    // rxJava 库包
+    compile dependencies.rxJava
+    compile dependencies.rxAndroid
+
+    // supportV7的包中的特有的一些控件
+    compile dependencies.recyclerView
+    compile dependencies.appcompat
+    compile dependencies.cardview
+    compile dependencies.design
+    // 个人撰写的关于RecyclerView的库包，还有待改进
+    compile dependencies.sola_container
+//    // 事件总线
+//    compile dependencies.eventBus
+
+}

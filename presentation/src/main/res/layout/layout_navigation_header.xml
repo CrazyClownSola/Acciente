@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimary"
+    android:padding="15dp">
+
+
+    <com.sola.android.acciente.main.view.CircleImageView
+        android:id="@+id/id_navigation_user_head_pic_bigger"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/user_bigger_pic"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp"
+        />
+
+    <ImageView
+        android:id="@+id/id_navigation_night_theme_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shape_round_bounds"
+        android:contentDescription="@null"
+        android:padding="10dp"
+        android:src="@drawable/selector_brightness"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/id_navigation_night_theme_change"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/id_navigation_night_theme_change"
+        android:background="@drawable/shape_round_bounds"
+        android:contentDescription="@null"
+        android:padding="10dp"
+        android:src="@drawable/ic_email_white_24dp"
+        />
+
+
+    <TextView
+        android:id="@+id/id_navigation_text_user_name"
+        style="@style/Text_User_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id_navigation_user_head_pic_bigger"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@+id/id_navigation_user_head_pic_bigger"
+        android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:gravity="left|center_vertical"
+        android:maxWidth="180dp"
+        android:singleLine="true"
+        android:text="@string/default_name"
+        />
+
+    <TextView
+        style="@style/Text_User_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/id_navigation_text_user_name"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@+id/id_navigation_text_user_name"
+        android:background="@drawable/shape_round_bounds_radius_5"
+        android:paddingBottom="1dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="1dp"
+        android:text="LV3"
+        android:textSize="12sp"
+        />
+
+    <TextView
+        android:id="@+id/id_text_user_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id_navigation_text_user_name"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@+id/id_navigation_text_user_name"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/shape_round_bounds_gray_background"
+        android:ellipsize="end"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:singleLine="true"
+        android:text="正式会员"
+        android:textColor="#db859e"
+        android:textSize="12sp"
+        />
+
+    <TextView
+        android:id="@+id/id_text_user_coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id_navigation_text_user_name"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@+id/id_text_user_flag"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="硬币：121"
+        android:textColor="#ffbccf"
+        android:textSize="12sp"
+        />
+
+
+</RelativeLayout>
