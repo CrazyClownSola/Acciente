@@ -3,12 +3,12 @@
 > 目标是模仿出整个App中所展现的界面效果
 > 主要的技术点有以下几个：**Material Design**，**Dagger2**，**RxJava**等，主要目的是熟练运用**Material Design**，和对那套作死的框架的熟练……
 
-
 -----------------
 
-
 ## 由Dagger2引起的血案
-> 与其说是血案，不如说是自己作的一手好死，想要从技术层面实现一套松耦合的框架，并且熟练运用。
+> 与其说是血案，不如说是自己作的一手好死，想要从技术层面实现一套松耦合的框架，逻辑和数据的分离，界面和逻辑的分离，并且熟练运用。
+> 估计会与很多人觉得这只是在纸上谈兵，现实是残酷的(其实从某种意义上来说，这样想的才是正常人)
+> 
 > 那么下面容我整理下这些东西。
 > 备注：解释下为什么是Dagger2，而不是Dagger的问题，Dagger2是Google团队新维护的，基于Dagger，并且拓展一些新东西的框架，由于Dagger自身已经不再维护，所以这里采用Dagger2。
 
@@ -172,7 +172,6 @@ public class ApplicationModule { // module的方法命名方式多数采用provi
 Gradle build script dependency：
 `compile 'com.android.support:design:22.2.0' //可修改版本号为自己匹配`
 Design Support Library包含8个控件，具体如下：
-
 | Widget Name	| Description |
 | :-- | :-- |
 |android.support.design.widget.TextInputLayout	|强大带提示的MD风格的EditText|
