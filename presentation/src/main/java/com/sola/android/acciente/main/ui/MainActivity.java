@@ -10,6 +10,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.sola.android.acciente.main.R;
+import com.sola.android.acciente.main.internal.di.components.DaggerSeedComponent;
+import com.sola.android.acciente.main.internal.di.components.SeedComponent;
+import com.sola.android.acciente.main.internal.di.modules.SeedModule;
+import com.sola.android.acciente.main.internal.di.modules.UserModule;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -29,6 +33,8 @@ public class MainActivity extends BaseActivity {
     // ===========================================================
     // Fields
     // ===========================================================
+
+    SeedComponent seedComponent;
 
     @ViewById
     Toolbar id_tool_bar;
@@ -80,12 +86,23 @@ public class MainActivity extends BaseActivity {
 
     @AfterViews
     public void afterViews() {
+        initializeInjector();
+
         id_tool_bar.setTitle("");
         setSupportActionBar(id_tool_bar);
         id_navigation.setNavigationItemSelectedListener(menuItem -> {
             id_drawer_layout.closeDrawers();
             return false;
         });
+    }
+
+    private void initializeInjector() {
+        this.seedComponent = DaggerSeedComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .seedModule(new SeedModule())
+                .userModule(new UserModule())
+                .build();
     }
 
     @Click

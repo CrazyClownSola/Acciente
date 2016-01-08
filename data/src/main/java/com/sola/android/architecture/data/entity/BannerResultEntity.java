@@ -1,21 +1,12 @@
-package com.sola.android.acciente.main.ui.fragments;
+package com.sola.android.architecture.data.entity;
 
-import android.support.v4.app.Fragment;
-
-import com.sola.android.acciente.main.R;
-import com.sola.android.acciente.main.presenter.SeedPresenter;
-
-import org.androidannotations.annotations.EFragment;
-
-import javax.inject.Inject;
+import java.util.List;
 
 /**
- * 直播的Fragment
  * author: Sola
- * 2016/1/6
+ * 2016/1/8
  */
-@EFragment(R.layout.fragment_direct_seeding)
-public class DirectSeedingFragment extends Fragment {
+public class BannerResultEntity extends BaseResultEntity {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -24,8 +15,7 @@ public class DirectSeedingFragment extends Fragment {
     // Fields
     // ===========================================================
 
-    @Inject
-    SeedPresenter seedPresenter;
+    List<BannerEntity> result;
 
     // ===========================================================
     // Constructors
@@ -34,6 +24,10 @@ public class DirectSeedingFragment extends Fragment {
     // ===========================================================
     // Getter & Setter
     // ===========================================================
+
+    public List<BannerEntity> getResult() {
+        return result;
+    }
 
     // ===========================================================
     // Methods for/from SuperClass/Interfaces

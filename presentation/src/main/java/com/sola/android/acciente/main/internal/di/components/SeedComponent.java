@@ -3,6 +3,7 @@ package com.sola.android.acciente.main.internal.di.components;
 import com.sola.android.acciente.main.internal.di.PerActivity;
 import com.sola.android.acciente.main.internal.di.modules.ActivityModule;
 import com.sola.android.acciente.main.internal.di.modules.SeedModule;
+import com.sola.android.acciente.main.internal.di.modules.UserModule;
 import com.sola.android.acciente.main.ui.fragments.DirectSeedingFragment;
 
 import dagger.Component;
@@ -13,7 +14,7 @@ import dagger.Component;
  */
 @PerActivity // 依赖于Activity的生命周期
 @Component(dependencies = ApplicationComponent.class,
-        modules = {ActivityModule.class, SeedModule.class})
+        modules = {ActivityModule.class, SeedModule.class, UserModule.class})
 public interface SeedComponent {
     // ===========================================================
     // Constants

@@ -1,6 +1,14 @@
 package com.sola.android.acciente.main.internal.di.modules;
 
+import com.sola.android.acciente.main.internal.di.PerActivity;
+import com.sola.android.architecture.domain.BannerResultDTO;
+import com.sola.android.architecture.domain.interactor.ConnectionCase;
+import com.sola.android.architecture.domain.interactor.GetImageList;
+
+import javax.inject.Named;
+
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * author: Sola
@@ -16,7 +24,9 @@ public class SeedModule {
     // Fields
     // ===========================================================
 
-    /***** 可以考虑构造带点参数，一些可能用到的 *****/
+    /*****
+     * 可以考虑构造带点参数，一些可能用到的
+     *****/
 
     // ===========================================================
     // Constructors
@@ -33,6 +43,13 @@ public class SeedModule {
     // ===========================================================
     // Methods
     // ===========================================================
+    @Provides
+    @PerActivity
+    @Named("imageList")
+    ConnectionCase<BannerResultDTO> provideGetImageList(GetImageList imageList) {
+        return imageList;
+    }
+
 
     // ===========================================================
     // Inner and Anonymous Classes

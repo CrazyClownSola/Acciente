@@ -6,7 +6,8 @@ import com.sola.android.acciente.main.internal.di.modules.ApplicationModule;
 import com.sola.android.acciente.main.ui.BaseActivity;
 import com.sola.android.architecture.domain.executor.PostExecutionThread;
 import com.sola.android.architecture.domain.executor.ThreadExecutor;
-import com.sola.android.architecture.domain.repository.UserRepository;
+import com.sola.android.architecture.domain.repository.Case1Repository;
+import com.sola.android.architecture.domain.repository.Case2Repository;
 
 import javax.inject.Singleton;
 
@@ -60,6 +61,8 @@ public interface ApplicationComponent {
      *
      * @return 返回仓储
      */
-    UserRepository userRepository();
+    Case1Repository userRepository();
+
+    Case2Repository case2Repository();
 
 }

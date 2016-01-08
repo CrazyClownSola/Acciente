@@ -1,17 +1,10 @@
-package com.sola.android.architecture.domain.repository;
-
-import com.sola.android.architecture.domain.User;
-
-import java.util.List;
-
-import rx.Observable;
+package com.sola.android.architecture.data.net;
 
 /**
- * 过渡接口，在ApplicationComponent中存在的实例
  * author: Sola
- * 2015/10/30
+ * 2016/1/8
  */
-public interface UserRepository {
+public interface RestConfig {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -20,10 +13,10 @@ public interface UserRepository {
     // Fields
     // ===========================================================
 
+    String BASE_URL = "yourservice";
+
     // ===========================================================
     // Methods
     // ===========================================================
-
-    Observable<List<User>> getUsers();
 
 }

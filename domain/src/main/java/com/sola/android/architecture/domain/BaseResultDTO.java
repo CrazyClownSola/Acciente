@@ -1,14 +1,10 @@
-package com.sola.android.architecture.data.repository.factory;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
+package com.sola.android.architecture.domain;
 
 /**
  * author: Sola
- * 2015/10/30
+ * 2016/1/8
  */
-@Singleton
-public class UserDataFactory {
+public class BaseResultDTO {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -17,15 +13,9 @@ public class UserDataFactory {
     // Fields
     // ===========================================================
 
-
     // ===========================================================
     // Constructors
     // ===========================================================
-
-    @Inject
-    public UserDataFactory() {
-    }
-
 
     // ===========================================================
     // Getter & Setter
@@ -38,10 +28,6 @@ public class UserDataFactory {
     // ===========================================================
     // Methods
     // ===========================================================
-
-    public UserDataStore createCloudDataStore() {
-        return new CloudUserDataStore();
-    }
 
     // ===========================================================
     // Inner and Anonymous Classes

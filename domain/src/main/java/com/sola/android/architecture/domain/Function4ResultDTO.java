@@ -1,20 +1,10 @@
-package com.sola.android.architecture.domain.interactor;
-
-import com.sola.android.architecture.domain.executor.PostExecutionThread;
-import com.sola.android.architecture.domain.executor.ThreadExecutor;
-import com.sola.android.architecture.domain.repository.UserRepository;
-
-import javax.inject.Inject;
-
-import rx.Observable;
+package com.sola.android.architecture.domain;
 
 /**
  * author: Sola
- * 2015/10/30
+ * 2016/1/8
  */
-public class GetUserList extends UserCase {
-
-
+public class Function4ResultDTO {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -22,18 +12,11 @@ public class GetUserList extends UserCase {
     // ===========================================================
     // Fields
     // ===========================================================
-    final UserRepository userRepository;
 
     // ===========================================================
     // Constructors
     // ===========================================================
-    @Inject
-    protected GetUserList(
-            UserRepository repository,
-            ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        super(threadExecutor, postExecutionThread);
-        userRepository = repository;
-    }
+
     // ===========================================================
     // Getter & Setter
     // ===========================================================
@@ -41,10 +24,7 @@ public class GetUserList extends UserCase {
     // ===========================================================
     // Methods for/from SuperClass/Interfaces
     // ===========================================================
-    @Override
-    protected Observable buildUseCaseObservable() {
-        return userRepository.getUsers();
-    }
+
     // ===========================================================
     // Methods
     // ===========================================================

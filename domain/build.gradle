@@ -1,8 +1,10 @@
+//import com.sun.org.apache.xalan.internal.xsltc.cmdline.Compile
+
 apply plugin: 'java'
 
 //虽然不是很确定这两个有什么用，但是不加这个，在run项目的时候会Crash
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 configurations {
     provided
@@ -18,3 +20,7 @@ dependencies {
     compile domainDependencies.dagger
     compile domainDependencies.rxJava
 }
+
+//tasks.withType(Compile) {
+//    options.encoding = "UTF-8"
+//}

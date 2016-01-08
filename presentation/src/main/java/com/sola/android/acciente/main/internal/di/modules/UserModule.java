@@ -1,21 +1,20 @@
-package com.sola.android.acciente.main.ui.fragments;
+package com.sola.android.acciente.main.internal.di.modules;
 
-import android.support.v4.app.Fragment;
+import com.sola.android.acciente.main.internal.di.PerActivity;
+import com.sola.android.architecture.domain.interactor.test_case.Case2Base;
+import com.sola.android.architecture.domain.interactor.test_case.LoginTestCase;
 
-import com.sola.android.acciente.main.R;
-import com.sola.android.acciente.main.presenter.SeedPresenter;
+import javax.inject.Singleton;
 
-import org.androidannotations.annotations.EFragment;
-
-import javax.inject.Inject;
+import dagger.Module;
+import dagger.Provides;
 
 /**
- * 直播的Fragment
  * author: Sola
- * 2016/1/6
+ * 2016/1/8
  */
-@EFragment(R.layout.fragment_direct_seeding)
-public class DirectSeedingFragment extends Fragment {
+@Module
+public class UserModule {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -23,9 +22,6 @@ public class DirectSeedingFragment extends Fragment {
     // ===========================================================
     // Fields
     // ===========================================================
-
-    @Inject
-    SeedPresenter seedPresenter;
 
     // ===========================================================
     // Constructors
@@ -42,6 +38,13 @@ public class DirectSeedingFragment extends Fragment {
     // ===========================================================
     // Methods
     // ===========================================================
+
+    @Provides
+    @PerActivity
+    Case2Base provideUserCase(LoginTestCase loginTestCase) {
+        return loginTestCase;
+    }
+
 
     // ===========================================================
     // Inner and Anonymous Classes

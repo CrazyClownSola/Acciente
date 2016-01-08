@@ -1,18 +1,21 @@
-package com.sola.android.architecture.data.repository.factory;
+package com.sola.android.architecture.data.repository;
 
-import com.sola.android.architecture.data.entity.UserEntity;
-import com.sola.android.architecture.data.net.ApiConnection;
-import com.sola.android.architecture.data.net.RestApi;
+import com.sola.android.architecture.domain.BaseResultDTO;
+import com.sola.android.architecture.domain.Function1ResultDTO;
+import com.sola.android.architecture.domain.Function4ResultDTO;
+import com.sola.android.architecture.domain.repository.Case2Repository;
 
-import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 
 /**
  * author: Sola
- * 2015/10/30
+ * 2016/1/8
  */
-public class CloudUserDataStore implements UserDataStore {
+public class Case2DataRepository implements Case2Repository {
 
     // ===========================================================
     // Constants
@@ -26,6 +29,10 @@ public class CloudUserDataStore implements UserDataStore {
     // Constructors
     // ===========================================================
 
+    @Inject
+    public Case2DataRepository() {
+    }
+
     // ===========================================================
     // Getter & Setter
     // ===========================================================
@@ -34,8 +41,18 @@ public class CloudUserDataStore implements UserDataStore {
     // Methods for/from SuperClass/Interfaces
     // ===========================================================
     @Override
-    public Observable<List<UserEntity>> userEntities() {
-        return ApiConnection.createService(RestApi.class).userEntityList();
+    public Observable<Function1ResultDTO> function1(Map<String, String> params) {
+        return null;
+    }
+
+    @Override
+    public Observable<BaseResultDTO> function2(Map<String, String> params) {
+        return null;
+    }
+
+    @Override
+    public Observable<Function4ResultDTO> function4(Map<String, String> params) {
+        return null;
     }
     // ===========================================================
     // Methods

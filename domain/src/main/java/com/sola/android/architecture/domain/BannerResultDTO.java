@@ -1,21 +1,12 @@
-package com.sola.android.acciente.main.ui.fragments;
-
-import android.support.v4.app.Fragment;
-
-import com.sola.android.acciente.main.R;
-import com.sola.android.acciente.main.presenter.SeedPresenter;
-
-import org.androidannotations.annotations.EFragment;
-
-import javax.inject.Inject;
+package com.sola.android.architecture.domain;
 
 /**
- * 直播的Fragment
+ * 根据业务逻辑进行数据的筛选
+ * <p>
  * author: Sola
- * 2016/1/6
+ * 2016/1/8
  */
-@EFragment(R.layout.fragment_direct_seeding)
-public class DirectSeedingFragment extends Fragment {
+public class BannerResultDTO {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -24,8 +15,30 @@ public class DirectSeedingFragment extends Fragment {
     // Fields
     // ===========================================================
 
-    @Inject
-    SeedPresenter seedPresenter;
+    /**
+     * id
+     */
+    String id;
+
+    /**
+     * 标题
+     */
+    String title;
+
+    /**
+     * 链接
+     */
+    String link;
+
+    /**
+     * 描述
+     */
+    String description;
+
+    /**
+     * 图片存于服务器的位置
+     */
+    String imageSrc;
 
     // ===========================================================
     // Constructors
@@ -34,6 +47,47 @@ public class DirectSeedingFragment extends Fragment {
     // ===========================================================
     // Getter & Setter
     // ===========================================================
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
+    }
+
 
     // ===========================================================
     // Methods for/from SuperClass/Interfaces

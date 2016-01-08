@@ -1,13 +1,9 @@
-package com.sola.android.architecture.data.repository;
+package com.sola.android.architecture.domain.interactor;
 
-import com.sola.android.architecture.data.entity.mapper.UserEntityDataMapper;
-import com.sola.android.architecture.data.net.ApiConnection;
-import com.sola.android.architecture.data.net.RestApi;
-import com.sola.android.architecture.data.repository.factory.UserDataFactory;
-import com.sola.android.architecture.domain.User;
-import com.sola.android.architecture.domain.repository.UserRepository;
-
-import java.util.List;
+import com.sola.android.architecture.domain.BannerResultDTO;
+import com.sola.android.architecture.domain.executor.PostExecutionThread;
+import com.sola.android.architecture.domain.executor.ThreadExecutor;
+import com.sola.android.architecture.domain.repository.Case1Repository;
 
 import javax.inject.Inject;
 
@@ -15,10 +11,9 @@ import rx.Observable;
 
 /**
  * author: Sola
- * 2015/10/30
+ * 2016/1/8
  */
-
-public class UserDataRepository implements UserRepository {
+public class GetImageList extends ConnectionCase<BannerResultDTO> {
 
     // ===========================================================
     // Constants
@@ -28,19 +23,17 @@ public class UserDataRepository implements UserRepository {
     // Fields
     // ===========================================================
 
-    final UserDataFactory mFactory;
-
-    final UserEntityDataMapper dataMapper;
-
+    private final Case1Repository repository;
 
     // ===========================================================
     // Constructors
     // ===========================================================
-
     @Inject
-    public UserDataRepository(UserDataFactory mFactory, UserEntityDataMapper dataMapper) {
-        this.mFactory = mFactory;
-        this.dataMapper = dataMapper;
+    protected GetImageList(ThreadExecutor threadExecutor,
+                           PostExecutionThread postExecutionThread,
+                           Case1Repository repository) {
+        super(threadExecutor, postExecutionThread);
+        this.repository = repository;
     }
 
     // ===========================================================
@@ -50,17 +43,13 @@ public class UserDataRepository implements UserRepository {
     // ===========================================================
     // Methods for/from SuperClass/Interfaces
     // ===========================================================
-    @Override
-    public Observable<List<User>> getUsers() {
-//        final UserDataStore dataStore = mFactory.createCloudDataStore();
-//        return dataStore.userEntities().map(
-//                dataMapper::transform
-//        );
-        return ApiConnection.createService(RestApi.class).userEntityList().map(
-                dataMapper::transform
-        );
 
+    @Override
+    protected Observable<BannerResultDTO> buildUseCaseObservable() {
+
+        return repository.getImageList();
     }
+
     // ===========================================================
     // Methods
     // ===========================================================

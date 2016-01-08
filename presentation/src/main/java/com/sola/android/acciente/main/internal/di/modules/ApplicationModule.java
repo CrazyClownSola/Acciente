@@ -6,10 +6,12 @@ import android.content.Context;
 import com.sola.android.acciente.main.executor.JobExecutor;
 import com.sola.android.acciente.main.executor.UIThread;
 import com.sola.android.acciente.main.navigator.Navigator;
-import com.sola.android.architecture.data.repository.UserDataRepository;
+import com.sola.android.architecture.data.repository.Case1DataRepository;
+import com.sola.android.architecture.data.repository.Case2DataRepository;
 import com.sola.android.architecture.domain.executor.PostExecutionThread;
 import com.sola.android.architecture.domain.executor.ThreadExecutor;
-import com.sola.android.architecture.domain.repository.UserRepository;
+import com.sola.android.architecture.domain.repository.Case1Repository;
+import com.sola.android.architecture.domain.repository.Case2Repository;
 
 import javax.inject.Singleton;
 
@@ -104,8 +106,14 @@ public class ApplicationModule {
      */
     @Provides
     @Singleton
-    UserRepository provideUserRepository(UserDataRepository userDataRepository) {
+    Case1Repository provideUserRepository(Case1DataRepository userDataRepository) {
         return userDataRepository;
+    }
+
+    @Provides
+    @Singleton
+    Case2Repository provideCase2Repository(Case2DataRepository case2DataRepository) {
+        return case2DataRepository;
     }
 
     // ===========================================================

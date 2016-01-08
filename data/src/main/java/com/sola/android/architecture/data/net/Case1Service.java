@@ -1,16 +1,16 @@
-package com.sola.android.architecture.data.repository.factory;
+package com.sola.android.architecture.data.net;
 
-import com.sola.android.architecture.data.entity.UserEntity;
+import com.sola.android.architecture.data.entity.BannerResultEntity;
 
-import java.util.List;
-
+import retrofit.http.POST;
+import retrofit.http.Query;
 import rx.Observable;
 
 /**
  * author: Sola
- * 2015/10/30
+ * 2015/11/13
  */
-public interface UserDataStore {
+public interface Case1Service {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -19,10 +19,16 @@ public interface UserDataStore {
     // Fields
     // ===========================================================
 
+    String BASE_URL = RestConfig.BASE_URL;
+
     // ===========================================================
     // Methods
     // ===========================================================
 
-    Observable<List<UserEntity>> userEntities();
+    @POST("/cms/f/imageList")
+    Observable<BannerResultEntity> getImageList();
+
+    @POST("/cms/f/articleList")
+    Observable<BannerResultEntity> getArticleList(@Query("categoryId") String categoryId);
 
 }
