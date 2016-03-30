@@ -4,16 +4,17 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 /**
  * author: Sola
@@ -65,6 +66,12 @@ public class ApiConnection {
 //        return retrofit.create(serviceClass);
 //    }
 
+    /**
+     * @param baseUrl      注意这里的基础Url为域名或者Ip地址
+     * @param serviceClass 实现服务接口的类
+     * @param <S>          返回的服务接口
+     * @return 服务接口对象
+     */
     public static <S> S createService(String baseUrl, Class<S> serviceClass) {
         if (httpClient == null) {
             httpClient = new OkHttpClient();
@@ -87,6 +94,9 @@ public class ApiConnection {
     // Inner and Anonymous Classes
     // ===========================================================
 
+    /**
+     * 监听请求日志用的类
+     */
     static class LoggingInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {

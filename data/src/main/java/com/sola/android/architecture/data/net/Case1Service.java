@@ -2,11 +2,13 @@ package com.sola.android.architecture.data.net;
 
 import com.sola.android.architecture.data.entity.BannerResultEntity;
 
-import retrofit.http.POST;
-import retrofit.http.Query;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
+ * 这个类可以不是个接口，可以是个class，这里很随意，个人比较喜欢interface的形式
+ * <p>
  * author: Sola
  * 2015/11/13
  */

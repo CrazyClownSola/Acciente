@@ -45,7 +45,7 @@ dependencies {
     compile project(':domain')
     compile project(':data')
 
-    testCompile 'junit:junit:4.12'
+        testCompile 'junit:junit:4.12'
 
     //    compile fileTree(dir: 'libs', include: ['*.jar'])
     def dependencies = rootProject.ext.appDependencies
@@ -56,7 +56,7 @@ dependencies {
     // Dagger2框架的引用
     apt dependencies.daggerCompiler
     compile dependencies.dagger
-    provided dependencies.javaxAnnotation
+//    provided dependencies.javaxAnnotation
 
     // rxJava 库包
     compile dependencies.rxJava

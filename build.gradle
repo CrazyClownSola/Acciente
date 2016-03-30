@@ -11,7 +11,7 @@ buildscript {
         // apt 编译环境的内容
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         // lambda 表达式
-        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

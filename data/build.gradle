@@ -48,11 +48,11 @@ dependencies {
     def dataDependencies = rootProject.ext.appDependencies
     apt dataDependencies.daggerCompiler
     compile dataDependencies.dagger
-    provided dataDependencies.javaxAnnotation
-    compile dataDependencies.okHttp
     compile dataDependencies.retrofit
-    compile dataDependencies.retrofit_gson
-    compile dataDependencies.retrofit_adapter
     compile dataDependencies.gson
     compile dataDependencies.rxJava
+    compile dataDependencies.retrofit_gson
+    compile dataDependencies.retrofit_adapter
+//    provided dataDependencies.javaxAnnotation
+//    compile dataDependencies.okHttp
 }
