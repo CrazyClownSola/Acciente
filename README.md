@@ -154,10 +154,13 @@ public class ApplicationModule { // module的方法命名方式多数采用provi
 }
 ```
 
-
 **关注点**
 如果你关心一下代码，编译一下之后你会发现多出这么个类DaggerApplicationComponent，在这个类当中，你会发现，你在Component当中注入的类，在这里会根据Module的规定返回对应的实例。
 这是Dagger的魅力，只要你配置正确，你可能完全不用关心实例在哪儿，便能很放心的使用它。
+
+
+
+
 
 
 ## Material Design
@@ -182,3 +185,230 @@ Design Support Library包含8个控件，具体如下：
 |android.support.design.widget.CoordinatorLayout	|超级FrameLayout
 |android.support.design.widget.AppBarLayout	|MD风格的滑动Layout
 |android.support.design.widget.CollapsingToolbarLayout	|可折叠MD风格ToolbarLayout
+
+
+## 林散框架之间的配合
+> 这一部分主要是对一些框架整合出的代码进行介绍
+> 介绍下出场的第三方有那些：
+> **Retrofit**、**OkHttp**、**Retrolambda**、**RxJava**
+> 这些框架整合在一起可以很漂亮的实现一套网络请求的全过程，有兴趣可以深入研究下
+
+
+### 网络请求部分
+> 网络请求，这件事情，想必各位都有着自己的见解，有的觉得自己写的才是最好的，有的更加信任第三方，我是属于后者，但是不能盲目的去相信任何一个框架，任何一个框架都是有自己的好与不好的一面面，如何取舍，如何判定，这都是需要经过一定量的考量和测试的。
+> 经过个人的一些测试，和众多文档的阅读，我选中了**Retrofit2.0**，这里要强调下是**"2.0"**的版本，这是由于2.0的版本对于Retrofit这套框架来说，是一个质的飞跃，一方面是代码简化的，另一方面是性能上的大提升。所以请各位务必注意不要看错版本。
+> 补充一句，在Retrofit的官方包里面就自带OKHttp的库包，所以可以只导入单个包就够了。
+
+
+附上链接[Retrofit](https://github.com/square/retrofit)
+
+废话不多上代码。
+
+ApiConnection.class 工具类，用于创建Retrofit实例
+```
+/**
+ * author: Sola
+ * 2015/10/30
+ */
+public class ApiConnection {
+    // ===========================================================
+    // Constants
+    // ===========================================================
+
+    // ===========================================================
+    // Fields
+    // ===========================================================
+
+    private static OkHttpClient httpClient; //创建OKHttpClient类
+    private static Gson gson = new GsonBuilder() //创建Gson解析实例
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+            .create();
+
+	/** 这个builder可以有很多个，可以根据具体服务的情况进行不同的匹配 **/
+    private static Retrofit.Builder builder =
+            new Retrofit.Builder()
+                    //添加对于RxJava的适用，致使可以在Api接口当中直接使用Rxjava，这个类是在"com.squareup.retrofit:adapter-rxjava"jar包当中的
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    //直接使用Gson转换进行对于参数的适配，这个类是在"com.squareup.retrofit:converter-gson"jar包当中的
+                    .addConverterFactory(GsonConverterFactory.create(gson));
+
+    // ===========================================================
+    // Constructors
+    // ===========================================================
+
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
+
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
+
+    // ===========================================================
+    // Methods
+    // ===========================================================
+
+    /**
+     * @param baseUrl 注意这里的基础Url为域名或者Ip地址
+     * @param serviceClass 实现服务接口的类
+     * @param <S> 返回的服务接口
+     * @return 服务接口对象
+     */
+    public static <S> S createService(String baseUrl, Class<S> serviceClass) {
+        if (httpClient == null) { //懒加载模式添加Client对象
+            httpClient = new OkHttpClient();
+            httpClient.interceptors().add(new LoggingInterceptor());//为OKHttp添加一个日志监听的类
+        }
+        Retrofit retrofit = builder.baseUrl(baseUrl).client(httpClient).build();//创建Retrofit，并且配置访问的Client
+        return retrofit.create(serviceClass);
+    }
+
+    // ===========================================================
+    // Inner and Anonymous Classes
+    // ===========================================================
+
+    /**
+     * 监听请求日志用的类
+     */
+    static class LoggingInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            long t1 = System.nanoTime();
+            Log.d("OkHttp", String.format("Sending request %s on %s%n%s body [%s]",
+                    request.url(), chain.connection(), request.headers(), request.body()));
+            Response response = chain.proceed(request);
+            long t2 = System.nanoTime();
+            Log.d("OkHttp", String.format("Received response for %s in %.1fms%n%s ",
+                    response.request().url(),
+                    (t2 - t1) / 1e6d,
+                    response.headers()));
+            return response;
+        }
+    }
+}
+
+```
+
+
+BaseService.class 服务接口的实现类，此类可根据具体服务的实现进行调整，这里的例子是根据RestFul形式的接口模版进行配置得到的结果。
+```
+
+/**
+ * 这个类可以不是个接口，可以是个class，这里很随意，个人比较喜欢interface的形式
+ * 
+ * author: Sola
+ * 2015/11/13
+ */
+public interface BaseService {
+    // ===========================================================
+    // Constants
+    // ===========================================================
+
+    // ===========================================================
+    // Fields
+    // ===========================================================
+
+    String BASE_URL = RestConfig.BASE_URL;
+    
+	String SERVICE_PATH = "service";
+	
+    String SERVICE_CLASS = "class";
+	
+    // ===========================================================
+    // Methods
+    // ===========================================================
+	
+    /**
+     * 登录的接口
+     *
+     * @param service   对应登录的服务名，由于服务器可能会变，这个参数这里就设定成可变动的
+     * @param className 对应登录的服务的具体方法名，同上
+     * @param data      接口所需要传入的参数
+     * @return 返回接口的响应，并且通过Gson转成对应的参数
+     */
+	@POST("/{service}/{className}/login")
+    Observable<LoginResult> login(@Path("service") String service,
+                                  @Path("className") String className,
+                                  @Query("paramList") String data);
+
+}
+
+
+```
+
+调用方式，戏称一句话的请求。
+```
+ ApiConnection.createService(
+                BaseService.BASE_URL, BaseService.class) // 创建Client的过程
+                .login(BaseService.SERVICE_PATH,
+                        BaseService.SERVICE_CLASS,
+                        request.toString())//这里的request可以变成对应服务所需要的传参
+                .observeOn(AndroidSchedulers.mainThread())// 这行代码，表示Observable的回调是运行在Android的UI主线程里面。
+                .subscribeOn(Schedulers.from(JobExecutor.getInstance()))// 这行代码表示，整个Observable是运行在一个线程池当中。
+                .subscribe(resp -> {
+	                // 对于返回的结果进行处理，这里已经直接转成对象了，可以直接处理
+	                // 并且由于前面已经配置了，UiThread，所以这里可以放心的写界面刷新代码。
+                },Throwable::printStackTrace);
+```
+
+
+### RxJava
+> 看了上面的代码，我觉得可能会有人困惑Observable是什么东西，在这里我就向各位介绍下**ReactiveX**这套神奇的框架，**RxJava**是**ReactiveX**在Java语言上的延伸代码。同样还有RxJS，RxNodeJs、RxPHP等等，各种语言各种实现，贴上官网[ReactiveX](https://github.com/ReactiveX)
+> **官方定义：**在ReactiveX当中，很多指令可能是并行执行的，之后他们的执行结果才会被观察者捕获，顺序是不确定的。未达到这个目的，你定义一种获取和变换数据的机制，而不是调用一个方法。这种机制下，存在一个可观察对象(Observable)，观察者(Observer)订阅(Subscribe)它。
+> 
+> 这是个神奇的语言，有篇帖子戏称，这是种万能的代码，然后在你仔细研究过这个之后，你会不由自主的同意这个观点。
+> 附上个人的理解，ReactiveX是一个将数据库层面的处理方式，提升到代码级别上的一套框架。让Coder可以在代码中更好的对数据进行处理。
+> 如果觉得官网文档看不懂，这里贴一个[链接](https://mcxiaoke.gitbooks.io/rxdocs/content/index.html)，是github对这个库文档的翻译，英文不好的请猛戳。
+
+#### Observables
+> 在ReactiveX当中，很多指令可能是并行执行的，之后他们的执行结果才会被观察者捕获，顺序是不确定的。未达到这个目的，你定义一种获取和变换数据的机制，而不是调用一个方法。这种机制下，存在一个可观察对象(Observable)，观察者(Observer)订阅(Subscribe)它。
+
+#### 回调函数
+下面是一个比较完整的例子
+```
+// 三个回调函数
+def myOnNext = { item -> /* do something useful with item */ };
+def myError = { throwable -> /* react sesibly to a failed call */};
+def myComplete = { /* clean up after the final response */ };
+
+// 一个观察者对象
+def myObservable = someMethod(itesParameters);
+// 调用
+myObservable.subscribe(myOnNext,myError,myComplete);
+
+```
+
+#### 取消订阅
+
+```
+// 获得取消订阅的对象
+Subscription subscription = Observable.just()               .subscribe();
+
+// Observable会停止发送新的数据项
+subscription.unsubscribe();
+
+```
+
+#### Observable的"冷"与"热"
+> 根据Observable的实现会决定，Observable是何时开始发射数据
+> 一个"热"Observable可能一创建完就发射数据
+> 一个"冷"Observable可能会一直等待，知道有观察者订阅它，才开始发射数据
+
+#### 精髓- - -操作符
+> 对于ReactiveX而言，Observable和Observer只是个开始
+> ReactiveX真正强大的地方是在于操作符的组合。
+
+下面是常用的操作符列表：
+- **创建操作** Create, Defer, Empty/Never/Throw, From, Interval, Just, Range, Repeat, Start, Timer
+- **变换操作** Buffer, FlatMap, GroupBy, Map, Scan和Window
+- **过滤操作** Debounce, Distinct, ElementAt, Filter, First, IgnoreElements, Last, Sample, Skip, SkipLast, Take, TakeLast
+- **组合操作** And/Then/When, CombineLatest, Join, Merge, StartWith, Switch, Zip
+- **错误处理** Catch和Retry
+- **辅助操作** Delay, Do, Materialize/Dematerialize, ObserveOn, Serialize, Subscribe, SubscribeOn, TimeInterval, Timeout, Timestamp, Using
+- **条件和布尔操作** All, Amb, Contains, DefaultIfEmpty, SequenceEqual, SkipUntil, SkipWhile, TakeUntil, TakeWhile
+- **算术和集合操作** Average, Concat, Count, Max, Min, Reduce, Sum
+- **转换操作** To
+- **连接操作** Connect, Publish, RefCount, Replay
+- **反压操作**用于增加特殊的流程控制策略的操作符
+
